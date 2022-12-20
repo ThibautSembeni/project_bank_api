@@ -134,7 +134,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"productId\": 1,\n    \"pricePaid\": 200.0\n}",
+							"raw": "{\n    \"productId\": 1,\n    \"pricePaid\": 500.0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -161,7 +161,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"pricePaid\": 500.0\n}",
+							"raw": "{\n    \"pricePaid\": 300.0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -169,14 +169,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/api/payment/13/update",
+							"raw": "{{baseURL}}/api/payment/23/update",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
 								"payment",
-								"13",
+								"23",
 								"update"
 							]
 						}
@@ -243,6 +243,65 @@
 			]
 		},
 		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"thib\",\n    \"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"thib\",\n    \"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Hello world",
 			"request": {
 				"method": "GET",
@@ -254,6 +313,35 @@
 					],
 					"path": [
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "room",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n     \"userId\": \"1\",\n     \"data\": \"rebonjour\"\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/room/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"room",
+						"test"
 					]
 				}
 			},
