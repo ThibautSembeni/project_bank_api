@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"os"
+	user "project_api/User"
 	"project_api/adapter"
 	"project_api/handler"
 	"project_api/payment"
@@ -25,7 +26,7 @@ func main() {
 	}
 	log.Println("Connection Established")
 
-	db.AutoMigrate(product.Product{}, payment.Payment{})
+	db.AutoMigrate(product.Product{}, payment.Payment{}, user.User{})
 
 	pr := product.NewRepository(db)
 	ps := product.NewService(pr)
@@ -35,6 +36,10 @@ func main() {
 	paymentS := payment.NewService(paymentR)
 	paymentHandler := handler.NewPaymentHandler(paymentS)
 
+	userR := user.NewRepository(db)
+	userS := user.NewService(userR)
+	userHandler := handler.NewUserHandler(userS)
+
 	router := gin.Default()
 	// router.GET("/", productHandler.Hello)
 
@@ -42,6 +47,10 @@ func main() {
 	adapter := adapter.NewGinAdapter(roomManager)
 
 	api := router.Group("/api")
+
+	api.POST("/login", userHandler.Login)
+	api.POST("/register", userHandler.Register)
+
 	api.POST("/product", productHandler.Store)
 	api.PUT("/product/:id/update", productHandler.Update)
 	api.DELETE("/product/:id/delete", productHandler.Delete)
