@@ -1,15 +1,16 @@
 package main
 
 import (
-	"log"
-	"os"
-	"project_api/handler"
-	"project_api/payment"
-	"project_api/product"
-
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
+	"os"
+	"project_api/adapter"
+	"project_api/handler"
+	"project_api/payment"
+	"project_api/product"
+	service "project_api/services"
 )
 
 func main() {
@@ -35,7 +36,10 @@ func main() {
 	paymentHandler := handler.NewPaymentHandler(paymentS)
 
 	router := gin.Default()
-	router.GET("/", productHandler.Hello)
+	// router.GET("/", productHandler.Hello)
+
+	roomManager := service.NewRoomManager()
+	adapter := adapter.NewGinAdapter(roomManager)
 
 	api := router.Group("/api")
 	api.POST("/product", productHandler.Store)
@@ -49,7 +53,9 @@ func main() {
 	api.DELETE("/payment/:id/delete", paymentHandler.Delete)
 	api.GET("/payment/:id", paymentHandler.FetchById)
 	api.GET("/payments", paymentHandler.List)
+	api.GET("/payments/stream", adapter.Stream)
 
+	router.StaticFile("/", "./public/home.html")
 	router.Run(":3000")
 
 }
