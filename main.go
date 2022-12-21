@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -9,12 +10,15 @@ import (
 	user "project_api/User"
 	"project_api/adapter"
 	"project_api/handler"
+	"project_api/middlewares"
 	"project_api/payment"
 	"project_api/product"
 	service "project_api/services"
 )
 
 func main() {
+	godotenv.Load(".env")
+
 	dbURL := os.Getenv("DB_URL")
 	if dbURL == "" {
 		dbURL = "user:password@tcp(localhost:3306)/bank?charset=utf8mb4&parseTime=True&loc=Local"
@@ -47,9 +51,11 @@ func main() {
 	adapter := adapter.NewGinAdapter(roomManager)
 
 	api := router.Group("/api")
+	api.Use(middlewares.JwtAuthMiddleware())
+	auth := router.Group("/auth")
 
-	api.POST("/login", userHandler.Login)
-	api.POST("/register", userHandler.Register)
+	auth.POST("/login", userHandler.Login)
+	auth.POST("/register", userHandler.Register)
 
 	api.POST("/product", productHandler.Store)
 	api.PUT("/product/:id/update", productHandler.Update)

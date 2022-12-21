@@ -4,6 +4,7 @@ import (
 	"errors"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"project_api/utils/token"
 )
 
 type Repository interface {
@@ -54,7 +55,7 @@ func (r *repository) LoginCheck(user User) (string, error) {
 		return "", err
 	}
 
-	token := "Bearer token"
-	return token, nil
+	tokenJWT, _ := token.GenerateJWT(user.Username)
+	return "Bearer " + tokenJWT, nil
 
 }
