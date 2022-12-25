@@ -1,13 +1,15 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
+	"project_api/adapter"
 	"project_api/payment"
+	service "project_api/services"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
-
 
 type paymentHandler struct {
 	paymentService payment.Service
@@ -17,14 +19,14 @@ func NewPaymentHandler(paymentService payment.Service) *paymentHandler {
 	return &paymentHandler{paymentService}
 }
 
-func (h *paymentHandler) Store(c *gin.Context)  {
+func (h *paymentHandler) Store(c *gin.Context) {
 	var input payment.InputPayment
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		response := Response{
 			Success: false,
 			Message: "Verify your data format or structure",
-			Data: err.Error(),
+			Data:    err.Error(),
 		}
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -37,10 +39,14 @@ func (h *paymentHandler) Store(c *gin.Context)  {
 			Message: "something went wrong",
 			Data:    err.Error(),
 		}
+
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
+	roomManager := service.NewRoomManager()
+	adapterRest := adapter.NewGinAdapter(roomManager)
+	adapterRest.Post(fmt.Sprintf("Un payement de %v a été réalisé pour le produit  %v", newPayment.PricePaid, newPayment.Product.Name))
 	response := Response{
 		Success: true,
 		Message: "new payment successfully register",
@@ -59,11 +65,15 @@ func (h *paymentHandler) Update(c *gin.Context) {
 		response := Response{
 			Success: false,
 			Message: "Verify your data format or structure",
-			Data: err.Error(),
+			Data:    err.Error(),
 		}
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+
+	roomManager := service.NewRoomManager()
+	adapterRest := adapter.NewGinAdapter(roomManager)
+	adapterRest.Post(fmt.Sprintf("Le prix de la transaction #%v à été modifié ! Nouveau montant : %v", payment.ID, payment.PricePaid))
 	response := Response{
 		Success: true,
 		Message: "Payment successfully updated",
@@ -80,7 +90,7 @@ func (h *paymentHandler) Delete(c *gin.Context) {
 		response := Response{
 			Success: false,
 			Message: "Impossible to delete your product",
-			Data: err.Error(),
+			Data:    err.Error(),
 		}
 		c.JSON(http.StatusBadRequest, response)
 		return
