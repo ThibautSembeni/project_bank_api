@@ -68,9 +68,9 @@ func main() {
 	api.DELETE("/payment/:id/delete", paymentHandler.Delete)
 	api.GET("/payment/:id", paymentHandler.FetchById)
 	api.GET("/payments", paymentHandler.List)
-	api.GET("/payments/stream", adapter.Stream)
+	router.GET("/api/payments/stream", adapter.Stream)
 
-	router.StaticFile("/", "./public/home.html")
+	router.StaticFile("/", "./public/payments.html")
 	router.Run(":3000")
 
 }
