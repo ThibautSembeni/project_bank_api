@@ -73,6 +73,17 @@ func (h *productHandler) Store(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Product Update
+//		@Description	Update Product
+//	 	@Schemes
+//		@Tags			product
+//		@Accept			json
+//		@Param			id		path		int			true	"Product ID"
+//		@Param			create	body		product.InputProduct	true	"Update product"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/product/:id/update [put]
 func (h *productHandler) Update(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var input product.InputProduct
@@ -96,6 +107,16 @@ func (h *productHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Product Delete
+//		@Description	Delete Product
+//	 	@Schemes
+//		@Tags			product
+//		@Accept			json
+//		@Param			id		path		int			true	"Product ID"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/product/:id/delete [delete]
 func (h *productHandler) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	err := h.productService.Delete(id)
@@ -117,6 +138,16 @@ func (h *productHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Product Search
+//		@Description	Find Product
+//	 	@Schemes
+//		@Tags			product
+//		@Accept			json
+//		@Param			id		path		int			true	"Product ID"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/product/:id [get]
 func (h *productHandler) FetchById(c *gin.Context) {
 	id := c.Param("id")
 	product, err := h.productService.Find(id)
@@ -138,6 +169,16 @@ func (h *productHandler) FetchById(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		All Products Search
+//		@Description	Search all Products
+//	 	@Schemes
+//		@Tags			product
+//		@Accept			json
+//		@Param			id		path		int			true	"Product ID"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/products [get]
 func (handler *productHandler) List(c *gin.Context) {
 
 	products, err := handler.productService.ListAll()

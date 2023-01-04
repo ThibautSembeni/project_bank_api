@@ -58,6 +58,104 @@ paths:
       summary: Product Store
       tags:
       - product
+  /api/product/:id:
+    get:
+      consumes:
+      - application/json
+      description: Find Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Search
+      tags:
+      - product
+  /api/product/:id/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Delete
+      tags:
+      - product
+  /api/product/:id/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update product
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/product.InputProduct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Update
+      tags:
+      - product
+  /api/products:
+    get:
+      consumes:
+      - application/json
+      description: Search all Products
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: All Products Search
+      tags:
+      - product
 securityDefinitions:
   ApiKeyAuth:
     description: API works with JWT Bearer Token
