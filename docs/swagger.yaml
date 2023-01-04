@@ -1,0 +1,67 @@
+basePath: /api
+definitions:
+  handler.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  product.InputProduct:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+    required:
+    - name
+    - price
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample document for an api implementation.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Project Go API [ESGI]
+  version: "1.0"
+paths:
+  /api/product:
+    post:
+      consumes:
+      - application/json
+      description: Create Product
+      parameters:
+      - description: Create product
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/product.InputProduct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Store
+      tags:
+      - product
+securityDefinitions:
+  ApiKeyAuth:
+    description: API works with JWT Bearer Token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

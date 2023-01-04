@@ -3,18 +3,41 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
 	"os"
 	user "project_api/User"
 	"project_api/adapter"
+	docs "project_api/docs"
 	"project_api/handler"
 	"project_api/middlewares"
 	"project_api/payment"
 	"project_api/product"
 	service "project_api/services"
 )
+
+// @title           Project Go API [ESGI]
+// @version         1.0
+// @description     This is a sample document for an api implementation.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:3000
+// @BasePath  /api
+
+//	@securityDefinitions.apikey	ApiKeyAuth
+//	@in							header
+//	@name						Authorization
+//	@description				API works with JWT Bearer Token
 
 func main() {
 	godotenv.Load(".env")
@@ -45,6 +68,7 @@ func main() {
 	userHandler := handler.NewUserHandler(userS)
 
 	router := gin.Default()
+
 	// router.GET("/", productHandler.Hello)
 
 	roomManager := service.NewRoomManager()
@@ -71,6 +95,8 @@ func main() {
 	router.GET("/api/payments/stream", adapter.Stream)
 
 	router.StaticFile("/", "./public/payments.html")
+	docs.SwaggerInfo.BasePath = "/"
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	router.Run(":3000")
 
 }

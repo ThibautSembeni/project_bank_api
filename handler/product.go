@@ -9,18 +9,20 @@ import (
 )
 
 type Response struct {
-	Success bool `json:"success"`
-	Message string `json:"message"`
-	Data interface{} `json:"data"`
+	Success bool        `json:"success"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
 }
 
 type productHandler struct {
 	productService product.Service
 }
 
-func NewProductHandler(productService product.Service) *productHandler{
-	return &productHandler{ productService}
+func NewProductHandler(productService product.Service) *productHandler {
+	return &productHandler{productService}
 }
+
+// @BasePath /api/
 
 func (h *productHandler) Hello(c *gin.Context) {
 	c.JSON(200, gin.H{
@@ -28,14 +30,24 @@ func (h *productHandler) Hello(c *gin.Context) {
 	})
 }
 
-func (h *productHandler) Store(c *gin.Context)  {
+//		@Summary		Product Store
+//		@Description	Create Product
+//	 	@Schemes
+//		@Tags			product
+//		@Accept			json
+//		@Param			create	body		product.InputProduct	true	"Create product"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/product [post]
+func (h *productHandler) Store(c *gin.Context) {
 	var input product.InputProduct
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		response := Response{
 			Success: false,
 			Message: "Verify your data format or structure",
-			Data: err.Error(),
+			Data:    err.Error(),
 		}
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -70,7 +82,7 @@ func (h *productHandler) Update(c *gin.Context) {
 		response := Response{
 			Success: false,
 			Message: "Verify your data format or structure",
-			Data: err.Error(),
+			Data:    err.Error(),
 		}
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -91,7 +103,7 @@ func (h *productHandler) Delete(c *gin.Context) {
 		response := Response{
 			Success: false,
 			Message: "Impossible to delete your product",
-			Data: err.Error(),
+			Data:    err.Error(),
 		}
 		c.JSON(http.StatusBadRequest, response)
 		return

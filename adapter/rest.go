@@ -22,13 +22,13 @@ func NewGinAdapter(rm service.Manager) GinAdapter {
 func (ga *ginAdapter) Post(msg string) {
 	ga.rm.Submit(msg)
 }
-func (ga *ginAdapter) Stream (c * gin.Context) {
+func (ga *ginAdapter) Stream(c *gin.Context) {
 
 	listener := ga.rm.OpenListener()
 	defer ga.rm.CloseListener(listener)
 
 	clientGone := c.Request.Context().Done()
-	
+
 	c.Stream(func(w io.Writer) bool {
 		select {
 		case <-clientGone:
