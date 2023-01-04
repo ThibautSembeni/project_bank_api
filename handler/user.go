@@ -14,6 +14,16 @@ func NewUserHandler(userService user.Service) *userHandler {
 	return &userHandler{userService}
 }
 
+//		@Summary		Login User
+//		@Description	User Login
+//	 	@Schemes
+//		@Tags			auth
+//		@Accept			json
+//		@Param			create	body	user.InputUser	true	"User login"
+//		@Produce		json
+//		@Success		200		{object} 	Response
+//		@Security		ApiKeyAuth
+//		@Router			/auth/login [post]
 func (h *userHandler) Login(c *gin.Context) {
 	var input user.InputUser
 	err := c.ShouldBindJSON(&input)
@@ -46,6 +56,16 @@ func (h *userHandler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Register User
+//		@Description	User Register
+//	 	@Schemes
+//		@Tags			auth
+//		@Accept			json
+//		@Param			create	body	user.InputUser	true	"User register"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/auth/register [post]
 func (h *userHandler) Register(c *gin.Context) {
 	var input user.InputUser
 	err := c.ShouldBindJSON(&input)

@@ -1,0 +1,363 @@
+basePath: /api
+definitions:
+  handler.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  payment.InputPayment:
+    properties:
+      id:
+        type: integer
+      pricePaid:
+        type: number
+      productId:
+        type: integer
+    required:
+    - pricePaid
+    - productId
+    type: object
+  product.InputProduct:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+    required:
+    - name
+    - price
+    type: object
+  user.InputUser:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample document for an api implementation.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Project Go API [ESGI]
+  version: "1.0"
+paths:
+  /api/payment:
+    get:
+      consumes:
+      - application/json
+      description: Search all Payment
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: All Payment Search
+      tags:
+      - payment
+    post:
+      consumes:
+      - application/json
+      description: Create Payment
+      parameters:
+      - description: Create payment
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/payment.InputPayment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Payment Store
+      tags:
+      - payment
+  /api/payment/:id:
+    get:
+      consumes:
+      - application/json
+      description: Find Payment
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Payment Search
+      tags:
+      - payment
+  /api/payment/:id/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Payment
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Payment Delete
+      tags:
+      - payment
+  /api/payment/:id/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Payment
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update payment
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/payment.InputPayment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Payment Update
+      tags:
+      - payment
+  /api/payments/stream:
+    get:
+      description: Stream route who return an url with a Content-Type of "application/octet-stream"
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: Payment Stream
+      tags:
+      - payment
+  /api/product:
+    post:
+      consumes:
+      - application/json
+      description: Create Product
+      parameters:
+      - description: Create product
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/product.InputProduct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Store
+      tags:
+      - product
+  /api/product/:id:
+    get:
+      consumes:
+      - application/json
+      description: Find Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Search
+      tags:
+      - product
+  /api/product/:id/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Delete
+      tags:
+      - product
+  /api/product/:id/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update product
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/product.InputProduct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Product Update
+      tags:
+      - product
+  /api/products:
+    get:
+      consumes:
+      - application/json
+      description: Search all Products
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: All Products Search
+      tags:
+      - product
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: User Login
+      parameters:
+      - description: User login
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/user.InputUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Login User
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: User Register
+      parameters:
+      - description: User register
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/user.InputUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Register User
+      tags:
+      - auth
+securityDefinitions:
+  ApiKeyAuth:
+    description: API works with JWT Bearer Token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

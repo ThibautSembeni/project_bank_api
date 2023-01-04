@@ -15,10 +15,22 @@ type paymentHandler struct {
 	paymentService payment.Service
 }
 
+// @BasePath /api/
+
 func NewPaymentHandler(paymentService payment.Service) *paymentHandler {
 	return &paymentHandler{paymentService}
 }
 
+//		@Summary		Payment Store
+//		@Description	Create Payment
+//	 	@Schemes
+//		@Tags			payment
+//		@Accept			json
+//		@Param			create	body		payment.InputPayment	true	"Create payment"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/payment [post]
 func (h *paymentHandler) Store(c *gin.Context) {
 	var input payment.InputPayment
 	err := c.ShouldBindJSON(&input)
@@ -56,6 +68,17 @@ func (h *paymentHandler) Store(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Payment Update
+//		@Description	Update Payment
+//	 	@Schemes
+//		@Tags			payment
+//		@Accept			json
+//		@Param			id		path		int			true	"Payment ID"
+//		@Param			create	body		payment.InputPayment	true	"Update payment"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/payment/:id/update [put]
 func (h *paymentHandler) Update(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var input payment.InputPayment
@@ -83,6 +106,16 @@ func (h *paymentHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Payment Delete
+//		@Description	Delete Payment
+//	 	@Schemes
+//		@Tags			payment
+//		@Accept			json
+//		@Param			id		path		int			true	"Payment ID"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/payment/:id/delete [delete]
 func (h *paymentHandler) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	err := h.paymentService.Delete(id)
@@ -104,6 +137,16 @@ func (h *paymentHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		Payment Search
+//		@Description	Find Payment
+//	 	@Schemes
+//		@Tags			payment
+//		@Accept			json
+//		@Param			id		path		int			true	"Payment ID"
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/payment/:id [get]
 func (h *paymentHandler) FetchById(c *gin.Context) {
 	id := c.Param("id")
 	payment, err := h.paymentService.Find(id)
@@ -125,6 +168,15 @@ func (h *paymentHandler) FetchById(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//		@Summary		All Payment Search
+//		@Description	Search all Payment
+//	 	@Schemes
+//		@Tags			payment
+//		@Accept			json
+//		@Produce		json
+//		@Success		200	{object}	Response
+//		@Security		ApiKeyAuth
+//		@Router			/api/payment [get]
 func (handler *paymentHandler) List(c *gin.Context) {
 
 	products, err := handler.paymentService.ListAll()
