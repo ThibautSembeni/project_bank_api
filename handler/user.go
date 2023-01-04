@@ -17,13 +17,13 @@ func NewUserHandler(userService user.Service) *userHandler {
 //		@Summary		Login User
 //		@Description	User Login
 //	 	@Schemes
-//		@Tags			login
+//		@Tags			auth
 //		@Accept			json
-//		@Param			create	body		user.InputUser	true	"User login"
+//		@Param			create	body	user.InputUser	true	"User login"
 //		@Produce		json
-//		@Success		200	{object}	Response
+//		@Success		200		{object} 	Response
 //		@Security		ApiKeyAuth
-//		@Router			/api/login [get]
+//		@Router			/auth/login [post]
 func (h *userHandler) Login(c *gin.Context) {
 	var input user.InputUser
 	err := c.ShouldBindJSON(&input)
@@ -59,13 +59,13 @@ func (h *userHandler) Login(c *gin.Context) {
 //		@Summary		Register User
 //		@Description	User Register
 //	 	@Schemes
-//		@Tags			register
+//		@Tags			auth
 //		@Accept			json
-//		@Param			create	body		user.InputUser	true	"User register"
+//		@Param			create	body	user.InputUser	true	"User register"
 //		@Produce		json
 //		@Success		200	{object}	Response
 //		@Security		ApiKeyAuth
-//		@Router			/api/register [get]
+//		@Router			/auth/register [post]
 func (h *userHandler) Register(c *gin.Context) {
 	var input user.InputUser
 	err := c.ShouldBindJSON(&input)

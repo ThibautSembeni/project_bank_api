@@ -173,7 +173,6 @@ func (h *paymentHandler) FetchById(c *gin.Context) {
 //	 	@Schemes
 //		@Tags			payment
 //		@Accept			json
-//		@Param			id		path		int			true	"Payment ID"
 //		@Produce		json
 //		@Success		200	{object}	Response
 //		@Security		ApiKeyAuth

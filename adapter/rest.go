@@ -15,6 +15,8 @@ type ginAdapter struct {
 	rm service.Manager
 }
 
+// @BasePath /api/
+
 func NewGinAdapter(rm service.Manager) GinAdapter {
 	return &ginAdapter{rm}
 }
@@ -22,6 +24,15 @@ func NewGinAdapter(rm service.Manager) GinAdapter {
 func (ga *ginAdapter) Post(msg string) {
 	ga.rm.Submit(msg)
 }
+
+//		@Summary		Payment Stream
+//		@Description	Stream route who return an url with a Content-Type of "application/octet-stream"
+//	 	@Schemes
+//		@Tags			payment
+//		@Produce		octet-stream
+//		@Success		200
+//		@Security		ApiKeyAuth
+//		@Router			/api/payments/stream [get]
 func (ga *ginAdapter) Stream(c *gin.Context) {
 
 	listener := ga.rm.OpenListener()

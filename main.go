@@ -97,6 +97,7 @@ func main() {
 	router.StaticFile("/", "./public/payments.html")
 	docs.SwaggerInfo.BasePath = "/"
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
 	router.Run(":3000")
 
 }
